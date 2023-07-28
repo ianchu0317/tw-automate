@@ -1,9 +1,8 @@
 import requests
-import pprint
 import json
+import tweepy
 
-
-#Datos del API
+#Datos del API Clima
 q = 'Buenos Aires'
 lang = 'es'
 key = 'fb74469b209446fdb0b220519232707'
@@ -11,6 +10,18 @@ url = f'https://api.weatherapi.com/v1/current.json?key={key}&q={q}&lang={lang}'
 
 #Datos para redacción del texto
 text = str()
+
+#Datos para API Twitter
+CONSUMER_KEY = "GrVXfFaTBEm9TO8WVEru7lvRw"
+CONSUMER_KEY_SECRET = "MQ4pLlL6q0wbwQ64WBPrTLykCD8NzI1fXy1o7BySciF0uNgEsZ"
+ACCESS_TOKEN = "1539417355276759040-QWP3YygUoNP3wi58H54aB83u1R3SFv"
+ACCESS_TOKEN_SECRET = "iYuas2NZauZz6Leyblff9zQJP97oV9mxR5l1kZcGb3OrS"
+BEARER_TOKEN="AAAAAAAAAAAAAAAAAAAAALo8pAEAAAAA7VgI2kgY9ayJyZVbQ3cs2kP7lHw%3DstWCkQI0ObmNatIfVcDkUbgzkA09e9YedVjv0DSnOJmt29NCRI"
+api = tweepy.Client(bearer_token=BEARER_TOKEN,
+                    access_token=ACCESS_TOKEN,
+                    access_token_secret=ACCESS_TOKEN_SECRET,
+                    consumer_key=CONSUMER_KEY,
+                    consumer_secret=CONSUMER_KEY_SECRET)
 
 #obtener clima
 def get_climate():
@@ -47,7 +58,10 @@ def get_text(data:dict):
     """
     return text
 
+def create_tweet(post):
+    api.create_tweet(text=post)
+
 if __name__ == '__main__':
     data = get_climate()
-    pprint.pprint(data)
-    text = get_text(data)
+    post = get_text(data)
+    create_tweet(post)
