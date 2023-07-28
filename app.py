@@ -2,6 +2,7 @@ import requests
 import pprint
 import json
 
+
 #Datos del API
 q = 'Buenos Aires'
 lang = 'es'
@@ -10,7 +11,6 @@ url = f'https://api.weatherapi.com/v1/current.json?key={key}&q={q}&lang={lang}'
 
 #Datos para redacción del texto
 text = str()
-weather_condition_icon = str()
 
 #obtener clima
 def get_climate():
@@ -26,8 +26,6 @@ def get_text(data:dict):
     last_updated = current.get('last_updated')
     temp_c = current.get('temp_c')
     feelslike_c =current.get('feelslike_c')
-    weather_condition_text = current.get('condition').get('text') 
-    weather_condition_icon = current.get('condition').get('icon')
     wind_vel = current.get('wind_kph')
     wind_dir_degree = current.get('wind_degree')
     pressure_mb = current.get('pressure_mb')
@@ -35,6 +33,7 @@ def get_text(data:dict):
     humidity = current.get('humidity')
     cloud = current.get('cloud')
     vis_km = current.get('vis_km')
+    weather_condition_text = current.get('condition').get('text') 
 
     text = f"""
     {region} 📍
@@ -50,4 +49,5 @@ def get_text(data:dict):
 
 if __name__ == '__main__':
     data = get_climate()
+    pprint.pprint(data)
     text = get_text(data)
